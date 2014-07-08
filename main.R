@@ -16,22 +16,28 @@ getData <- function(){
 loadData <- function(){
    message("loading a table with a size of 20 Mb")
    file1 <- "./household_power_consumption.txt" 
-   myData <<- read.csv2(file1, stringsAsFactors = FALSE, na.strings = "?")
-   myData$Date <<- as.Date(myData$Date, format = "%d/%m/%Y")
-   myDatab <- subset(myData, Date >= as.Date("2007-02-01"))
-   myDatab <- subset(myData, Date <= as.Date("2007-02-02"))
-   
+   myData <- read.csv2(file1, stringsAsFactors = FALSE, na.strings = "?")
+             #colClasses = c(rep("charater",2), rep("numeric", 7)))
 
+   myData$Date <- as.Date(myData$Date, format = "%d/%m/%Y")
+   subData <- subset(myData, Date >= as.Date("2007-02-01"))
+   subData <- subset(subData, Date <= as.Date("2007-02-02"))
+   subData$datetime <- with(subData, paste(Date, Time))
+   subData$datetime <- strptime(subData$datetime, format = "%Y-%m-%d %H:%M:%S")
+   subData <<- subData
 }
 
 ### Plot 1
 plot1 <- function(){
-png(file = "plot1.png")
-hist(as.numeric(myDatab$Global_active_power), col="red", xlab = "Global Active Power (kilowatts)",main="Global Active Power")
-dev.off
+   png(file = "plot1.png")
+   with(subData, hist(as.numeric(Global_active_power), col="red", xlab = "Global Active Power (kilowatts)",main="Global Active Power"))
+   dev.off
 }
 
 ### Plot 2
+plot2 <- function(){
+
+}
 
 
 ### plot 3
