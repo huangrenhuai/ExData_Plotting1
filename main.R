@@ -6,10 +6,11 @@ setwd("./") # set to an empty working directory. change accordingly.
 
 ### download and unzip the data
 getData <- function(){
-   if (!file.exists("temp.zip")){
+   if (!file.exists("household_power_consumption.txt")){
       url <-"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
       download.file(url, destfile = "temp.zip", method = "curl")
-      unzip("temp.zip")}
+      unzip("temp.zip")
+      file.remove("temp.zip")}
 }
 
 ### load the data
@@ -25,18 +26,23 @@ loadData <- function(){
    subData$datetime <- with(subData, paste(Date, Time))
    subData$datetime <- strptime(subData$datetime, format = "%Y-%m-%d %H:%M:%S")
    subData <<- subData
+   for (i in 3:9) subData[, i] <<- as.numeric(subData[, i])
 }
 
 ### Plot 1
 plot1 <- function(){
    png(file = "plot1.png")
    with(subData, hist(as.numeric(Global_active_power), col="red", xlab = "Global Active Power (kilowatts)",main="Global Active Power"))
-   dev.off
+   # dev.copy(png, filename = "plot1.png")
+   dev.off()
 }
 
 ### Plot 2
-plot2 <- function(){
-
+plot2 <- function(mode = "png"){
+   png(file = "plot2.png")
+   with(subData, plot(datetime, Global_active_power, xlab = "", ylab = "Global Active Power (kilowatts)", type = "n"))
+   with(subData, lines(datetime, Global_active_power))
+   dev.off()
 }
 
 
