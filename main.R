@@ -40,13 +40,20 @@ plot1 <- function(){
 ### Plot 2
 plot2 <- function(mode = "png"){
    png(file = "plot2.png")
-   with(subData, plot(datetime, Global_active_power, xlab = "", ylab = "Global Active Power (kilowatts)", type = "n"))
-   with(subData, lines(datetime, Global_active_power))
+   with(subData, plot(datetime, Global_active_power, xlab = "", ylab = "Global Active Power (kilowatts)", type = "l"))
+   #with(subData, lines(datetime, Global_active_power))
    dev.off()
 }
 
 
 ### plot 3
-
+plot3 <- function() {
+   png(file="plot3.png")
+   with(subData, plot(datetime, Sub_metering_1, xlab = "", ylab = "Energy sub metering", col = "black", type = "l", lwd=1.2))
+   with(subData, lines(datetime, Sub_metering_2, col = "red", lwd=1.2))
+   with(subData, lines(datetime, Sub_metering_3, col = "blue", lwd=1.2))
+   legend("topright", lty =1,lwd=1, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+   dev.off()
+}
 
 ### plot 4
