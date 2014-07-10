@@ -1,4 +1,4 @@
-### plot1.R
+### plot2.R
 
 ###This is an assignment in the course of Exploratory Data Analysis. 
 ###The assignment uses data from UC Irvine Machine Learning Repository. 
